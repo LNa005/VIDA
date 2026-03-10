@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>V.I.D.A.</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="grid-bg"></div>
+
+  <div class="container">
+
+    <!-- Header -->
+    <header>
+      <div class="subtitle-top">◆ SISTEMA OPERATIVO ◆</div>
+      <h1 id="title">V.I.D.A.</h1>
+      <p class="tagline">Salidas elegantes para situaciones imposibles</p>
+    </header>
+
+    <!-- Step 1 -->
+    <section class="step">
+      <label class="step-label">01 — ¿Qué tipo de excusa necesitas?</label>
+      <div class="situations-grid" id="situations"></div>
+    </section>
+
+    <!-- Step 2 -->
+    <section class="step">
+      <label class="step-label">02 — Nivel de urgencia</label>
+      <div class="urgency-row" id="urgency"></div>
+    </section>
+
+    <!-- Step 3 -->
+    <section class="step">
+      <label class="step-label">03 — Contexto</label>
+
+      <!-- Screenshot upload zone -->
+      <div class="upload-zone" id="upload-zone">
+        <input type="file" id="screenshot-input" accept="image/*" hidden />
+        <div class="upload-inner" id="upload-inner">
+          <span class="upload-icon">📸</span>
+          <span class="upload-text">Sube una captura del chat</span>
+          <span class="upload-sub">JPG, PNG, WEBP — haz clic o arrastra aquí</span>
+        </div>
+        <div class="upload-preview hidden" id="upload-preview">
+          <img id="preview-img" src="" alt="Captura" />
+          <button class="remove-img" id="remove-img">✕</button>
+          <div class="analyzing-badge hidden" id="analyzing-badge">🔍 Analizando captura...</div>
+          <div class="detected-badge hidden" id="detected-badge"></div>
+        </div>
+      </div>
+
+      <div class="context-separator"><span>o escribe el contexto</span></div>
+
+      <div class="textarea-wrapper">
+        <textarea
+          id="context"
+          rows="3"
+          placeholder="Ej: mi amigo insiste en quedar y no tengo ganas, mi jefe me pide quedarme tarde..."
+        ></textarea>
+        <div class="auto-detect-bar hidden" id="auto-detect-bar">
+          <span class="detect-pulse"></span>
+          <span id="detect-text">Detectando situación...</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Button -->
+    <button id="generate-btn" disabled>◆ GENERAR EXCUSA ◆</button>
+
+    <!-- Loading -->
+    <div id="loading" class="hidden">
+      <div class="loading-line" style="animation-delay: 0s">Analizando situación social...</div>
+      <div class="loading-line" style="animation-delay: 0.3s">Calculando nivel de drama...</div>
+      <div class="loading-line" style="animation-delay: 0.6s">Optimizando credibilidad...</div>
+    </div>
+
+    <!-- Result -->
+    <div id="result" class="hidden">
+      <div class="result-header">
+        <span class="result-label" id="result-label">◆ Excusa generada</span>
+        <button id="copy-btn">Copiar</button>
+      </div>
+      <div class="result-body" id="result-body"></div>
+      <div class="result-footer">
+        <button id="retry-btn">↺ Otra excusa</button>
+      </div>
+    </div>
+
+    <!-- Debug panel -->
+    <div id="debug-panel" class="hidden" style="margin-top:24px; background:#0a0a0a; border:1px solid #222; border-radius:4px; padding:16px; max-height:200px; overflow-y:auto;">
+      <div style="font-size:10px; letter-spacing:3px; color:#333; margin-bottom:8px; text-transform:uppercase;">◆ Diagnóstico</div>
+    </div>
+
+    <footer>USO RESPONSABLE — NO NOS HACEMOS RESPONSABLES DE RELACIONES ROTAS</footer>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
