@@ -11,85 +11,93 @@
 
 ### **V**erificador de **I**nconsistencias **D**iscretamente **A**ceptables
 
-*Salidas elegantes para situaciones imposibles — powered by Claude AI*
+*Salidas elegantes para situaciones imposibles *
 
 ---
 
 ![Status](https://img.shields.io/badge/estado-operativo-brightgreen?style=for-the-badge&logo=checkmarx)
-![Claude](https://img.shields.io/badge/motor-Claude_Sonnet_4-blueviolet?style=for-the-badge&logo=anthropic)
+![Claude](https://img.shields.io/badge/motor-Claude_Sonnet-blueviolet?style=for-the-badge&logo=anthropic)
 ![Stack](https://img.shields.io/badge/stack-HTML_·_CSS_·_JS-orange?style=for-the-badge)
 ![Responsabilidad](https://img.shields.io/badge/responsabilidad-ninguna-red?style=for-the-badge)
+
+**[⭐ Dale una estrella si te ha salvado la vida alguna vez](#)**
 
 </div>
 
 ---
 
-## ¿Qué es V.I.D.A.?
+## ¿Por qué existe V.I.D.A.?
 
-> **V.I.D.A.** es un generador de excusas con inteligencia artificial para las situaciones sociales más incómodas de la vida moderna.  
-> Selecciona tu situación, el nivel de urgencia, añade contexto opcional — y en segundos tendrás una excusa creíble, lista para copiar y pegar.
+Porque todos hemos estado ahí. El chat abierto, el cursor parpadeando, y el cerebro en blanco intentando inventarse algo creíble para no ir al trabajo, cancelar ese plan o evitar quedar con alguien sin que parezca mala excusa.
 
-No más bloqueos mentales. No más "es que..." sin terminar la frase. Solo excusas de precisión quirúrgica.
+**V.I.D.A. lo hace por ti.** En segundos. Con IA.
 
 ---
 
-## 🎭 Categorías disponibles
+## ✨ Lo que puede hacer
 
-| Emoji | Situación | Descripción |
-|-------|-----------|-------------|
-| 👻 | **No quiero quedar** | Para cuando no tienes ganas pero tampoco quieres quedar mal |
-| 📵 | **Cancelar plan a último momento** | Emergencias de última hora con cobertura narrativa sólida |
-| 🛌 | **No ir al trabajo / colegio** | Bajas de emergencia con justificación médico-social |
+**🔍 Detección automática** — escribe el contexto y V.I.D.A. detecta sola qué tipo de excusa necesitas, sin que tengas que seleccionar nada.
+
+**📸 Análisis de capturas** — sube una foto del chat y la IA lee la conversación, entiende la situación y genera la excusa perfecta para ese contexto concreto.
+
+**🎭 Excusas a medida** — no son plantillas genéricas. Cada excusa se genera en tiempo real adaptada a tu situación, urgencia y contexto.
+
+---
+
+## 🎭 Categorías
+
+| Emoji | Situación | Cuándo usarla |
+|-------|-----------|---------------|
+| 👻 | **No quiero quedar** | Cuando el plan aún no está confirmado y quieres esquivarlo |
+| 📵 | **Cancelar a último momento** | Cuando ya dijiste que sí pero ya no puedes más |
+| 🛌 | **No ir al trabajo / colegio** | Bajas de emergencia con narrativa sólida |
 
 ---
 
 ## ⚡ Niveles de urgencia
 
 ```
-🌿  SIN PRISA    →  Tienes tiempo de construir la excusa con calma
-⚡  URGENTE      →  Necesitas algo creíble en los próximos minutos  
-🔥  ¡CRÍTICO!    →  La situación explota ahora mismo
+🌿  SIN PRISA    →  Tienes margen para construir la coartada con calma
+⚡  URGENTE      →  Necesitas algo creíble en los próximos minutos
+🔥  ¡CRÍTICO!    →  La situación explota ahora mismo, no hay tiempo
 ```
 
 ---
 
 ## 🚀 Cómo usarlo
 
-### 1 — Consigue tu API Key
+### 1 — Consigue tu API Key de OpenRouter
 
-Ve a [console.anthropic.com](https://console.anthropic.com/) y genera una API key.
+Ve a **[openrouter.ai](https://openrouter.ai)** → crea cuenta → **Keys** → **Create Key**
+
+> OpenRouter es gratuito para empezar y te da acceso a Claude sin necesidad de cuenta de Anthropic.
 
 ### 2 — Configura el proyecto
 
-Abre `app.js` y reemplaza la primera variable:
+Abre `app.js` y pon tu key en la primera línea:
 
 ```js
-const API_KEY = "TU_API_KEY_AQUI";  // ← pon aquí tu clave
+const API_KEY = "sk-or-v1-AQUI_TU_KEY";
 ```
-
-> ⚠️ **Importante:** No subas tu API key a GitHub ni la compartas. Cualquier persona que la tenga puede usarla y gastar tus créditos de Anthropic.
 
 ### 3 — Abre en el navegador
 
-```bash
-# Opción A: directamente
-Abre index.html en tu navegador
-
-# Opción B: con Live Server (recomendado)
-Click derecho en index.html → Open with Live Server
+```
+Opción A → abre index.html directamente en tu navegador
+Opción B → usa Live Server en VSCode (recomendado)
 ```
 
-> 💡 Se recomienda Live Server porque algunos navegadores bloquean llamadas a APIs externas desde `file://`
+> 💡 Live Server evita problemas de CORS. Instálalo en VSCode, click derecho en `index.html` → *Open with Live Server*.
 
 ---
 
-## 📁 Estructura del proyecto
+## 📁 Estructura
 
 ```
 VIDA/
 ├── 📄 index.html   →  Estructura y layout
-├── 🎨 style.css    →  Estilos, tema y animaciones
-├── ⚙️  app.js       →  Lógica + integración con la API
+├── 🎨 style.css    →  Estilos, tema y animaciones  
+├── ⚙️  app.js       →  Lógica + integración con OpenRouter
 └── 📖 README.md    →  Este archivo
 ```
 
@@ -97,33 +105,27 @@ VIDA/
 
 ## 🔧 Personalización
 
-¿Quieres tunear V.I.D.A. a tu gusto?
-
 | Qué cambiar | Dónde |
 |-------------|-------|
-| Colores y tema visual | Variables `:root` en `style.css` |
-| Añadir nuevas situaciones | Array `SITUATIONS` en `app.js` |
+| Colores y tema | Variables `:root` en `style.css` |
+| Añadir situaciones | Array `SITUATIONS` en `app.js` |
 | Tono de las excusas | Función `buildPrompt()` en `app.js` |
-| Modelo de IA | Variable `model` en `callClaude()` |
+| Modelo de IA | Variable `MODEL` en `app.js` |
 
 ---
 
-## ⚖️ Aviso legal
+## 🤝 Úsala, compártela, mejórala
 
-```
-V.I.D.A. no se hace responsable de:
-  → Relaciones deterioradas por excusas mal ejecutadas
-  → Jefes que no se creen lo de "la tubería"
-  → Amigos que ya no te invitan a nada
-  → Consecuencias kármicas a largo plazo
+Si V.I.D.A. te ha salvado de una situación incómoda, **comparte el proyecto**. Hay mucha gente ahí fuera que necesita esto y no lo sabe todavía.
 
-El uso responsable (o irresponsable) es tuyo.
-```
+¿Tienes ideas para nuevas categorías, mejoras o has encontrado un bug? **Abre un issue o manda un PR.** Este proyecto es tuyo tanto como mío.
+
+Y si simplemente quieres decir que funciona de maravilla... **dale una estrella ⭐** que se agradece.
 
 ---
 
 <div align="center">
 
-*Hecho con amor + poca vergüenza*
+*Hecho con 🤖 + poca vergüenza · Úsala bien (o mal, tú decides)*
 
 </div>
