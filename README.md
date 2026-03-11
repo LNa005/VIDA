@@ -26,7 +26,7 @@
 
 > ## ⚠️ AVISO IMPORTANTE — TRABAJO EN PROGRESO
 >
-> **Este proyecto NO está listo para uso.** Hay bugs conocidos pendientes de resolver y la funcionalidad principal puede no funcionar correctamente dependiendo del entorno.
+> **Este proyecto NO está listo para uso.** Hay bugs conocidos pendientes de resolver y la funcionalidad principal no funciona aún.
 > No se recomienda compartir ni usar en producción hasta que se resuelvan los problemas listados en la sección [Bugs pendientes](#-bugs-pendientes).
 
 ---
@@ -37,13 +37,11 @@ Porque todos hemos estado ahí. El chat abierto, el cursor parpadeando, y el cer
 
 **V.I.D.A. lo hace por ti.** En segundos. Con IA.
 
-> ⚠️ **Nota:** La generación de excusas aún no funciona de forma estable en todos los entornos. Ver [Bugs pendientes](#-bugs-pendientes).
+> ⚠️ **Nota:** La generación de excusas no funciona aún. Ver [Bugs pendientes](#-bugs-pendientes).
 
 ---
 
-## ✨ Lo que puede hacer *(cuando funcione)*
-
-> **Estado actual:** Funcionalidades en desarrollo. Algunas pueden no responder como se espera.
+## ✨ Lo que podrá hacer *(cuando esté listo)*
 
 **🔍 Detección automática** — escribe el contexto y V.I.D.A. detecta sola qué tipo de excusa necesitas, sin que tengas que seleccionar nada.
 
@@ -77,63 +75,65 @@ Porque todos hemos estado ahí. El chat abierto, el cursor parpadeando, y el cer
 
 > Esta sección recoge los problemas conocidos que hay que resolver antes de que el proyecto esté listo.
 
-### ❌ `Uncaught SyntaxError: Unexpected token 'export'`
+---
 
-**Estado:** Pendiente de investigación  
-**Prioridad:** Alta — bloquea la funcionalidad principal en algunos entornos
+### ❌ Error 400 al llamar a la API — la excusa no se genera
+
+**Estado:** 🔴 Pendiente — **revisar mañana**  
+**Prioridad:** Crítica — bloquea la funcionalidad principal
 
 **Descripción:**  
-Al cargar la aplicación en ciertas configuraciones, la consola del navegador lanza el siguiente error:
+Al intentar generar una excusa, la consola muestra:
+
+```
+Failed to load resource: the server responded with a status of 400
+openrouter.ai/api/v1/chat/completions
+```
+
+La app cae al `catch` y muestra siempre el mismo texto de emergencia (`"Me quedé sin batería"`), ocultando el error real.
+
+**Causa probable:**  
+El nombre del modelo en el código puede no ser válido en OpenRouter, o la API key no tiene crédito.
+
+**Pasos para investigar mañana:**
+
+1. Abrir la app en el navegador con la consola abierta (F12)
+2. Hacer clic en el enlace `openrouter.ai/api/v1/chat/completions:1` que aparece en rojo — muestra el mensaje exacto de error de la API
+3. O ejecutar esto directamente en la consola y leer la respuesta:
+```js
+fetch("https://openrouter.ai/api/v1/chat/completions", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    "Authorization": "Bearer " + API_KEY
+  },
+  body: JSON.stringify({
+    model: MODEL,
+    max_tokens: 10,
+    messages: [{role: "user", content: "hola"}]
+  })
+}).then(r => r.json()).then(d => console.log(JSON.stringify(d)))
+```
+4. Con el mensaje exacto, determinar si el problema es:
+   - El nombre del modelo — probar con `anthropic/claude-3-5-sonnet` o consultar la lista en [openrouter.ai/models](https://openrouter.ai/models)
+   - La API key sin crédito o inválida — revisar en [openrouter.ai/keys](https://openrouter.ai/keys)
+   - Otro parámetro del body rechazado por OpenRouter
+
+---
+
+### ⚠️ `Uncaught SyntaxError: Unexpected token 'export'`
+
+**Estado:** 🟡 Pendiente — aparentemente externo, no bloquea  
+**Prioridad:** Baja
+
+**Descripción:**  
+La consola muestra este error al cargar, pero viene de una extensión de Chrome, no del código propio:
 
 ```
 Uncaught SyntaxError: Unexpected token 'export'   chrome-extension://...
 ```
 
-**Causa probable:**  
-El error parece originarse desde una extensión de Chrome que inyecta scripts con sintaxis de módulos ES (`export`) en un contexto donde no está permitido. No está claro aún si es un conflicto externo o un problema propio del código.
-
-**Pasos para reproducir:**  
-1. Abrir `index.html` con una o más extensiones de Chrome activas
-2. Abrir la consola del navegador (F12)
-3. El error aparece antes de que la app termine de cargar
-
-**Lo que hay que revisar:**
-- Comprobar si el error desaparece en ventana de incógnito (sin extensiones)
-- Identificar si algún script propio usa `export` fuera de un contexto de módulo
-- Si el error viene de una extensión externa, valorar añadir un aviso en el README para el usuario final
-
-**Hasta que esté resuelto:** Abrir la app en modo incógnito como medida provisional.
-
----
-
-## 🚀 Instalación *(en desarrollo — puede no funcionar)*
-
-> ⚠️ Los pasos de abajo son la intención del proyecto, pero la configuración puede fallar hasta que se resuelvan los bugs pendientes.
-
-### 1 — Consigue tu API Key de OpenRouter
-
-Ve a **[openrouter.ai](https://openrouter.ai)** → crea cuenta → **Keys** → **Create Key**
-
-> OpenRouter es gratuito para empezar y te da acceso a Claude sin necesidad de cuenta de Anthropic.
-
-### 2 — Configura el proyecto
-
-Abre `index.html`, localiza la variable `API_KEY` dentro del bloque `<script>` y sustitúyela:
-
-```js
-const API_KEY = "sk-or-v1-AQUI_TU_KEY";
-```
-
-> ⚠️ El archivo `app.js` existe pero actualmente **no se usa** — todo el código JS está embebido directamente en `index.html`. Pon la key ahí, no en `app.js`.
-
-### 3 — Abre en el navegador
-
-```
-Opción A → abre index.html directamente en tu navegador
-Opción B → usa Live Server en VSCode (recomendado)
-```
-
-> 💡 Si tienes problemas, prueba primero en ventana de incógnito para descartar conflictos con extensiones. Ver bug conocido arriba.
+**Hasta que se investigue:** No parece bloquear la app. Abrir en incógnito para confirmar que desaparece.
 
 ---
 
@@ -142,35 +142,24 @@ Opción B → usa Live Server en VSCode (recomendado)
 ```
 VIDA/
 ├── 📄 index.html   →  Estructura, estilos y lógica (todo embebido aquí)
-├── 🎨 style.css    →  Estilos externos (actualmente no se carga)
-├── ⚙️  app.js       →  Versión externa de la lógica (actualmente no se usa)
+├── 🎨 style.css    →  Estilos externos (pendiente de conectar)
+├── ⚙️  app.js       →  Versión externa de la lógica (pendiente de conectar)
 └── 📖 README.md    →  Este archivo
 ```
 
-> ⚠️ **Nota de estructura:** El proyecto tiene `app.js` y `style.css` como archivos separados, pero `index.html` los tiene todos embebidos internamente. Pendiente de unificar.
-
----
-
-## 🔧 Personalización
-
-| Qué cambiar | Dónde |
-|-------------|-------|
-| Colores y tema | Variables `:root` en el `<style>` de `index.html` |
-| Añadir situaciones | Array `SITUATIONS` en el `<script>` de `index.html` |
-| Tono de las excusas | Función `buildPrompt()` en el `<script>` de `index.html` |
-| Modelo de IA | Variable `MODEL` en el `<script>` de `index.html` |
+> ⚠️ **Nota de estructura:** `app.js` y `style.css` existen como archivos separados pero `index.html` los tiene todo embebido. Pendiente de unificar cuando la app funcione.
 
 ---
 
 ## 🤝 Contribuir
 
-El proyecto está en desarrollo activo. Si encuentras bugs o tienes ideas, abre un issue. Cualquier ayuda para resolver los [bugs pendientes](#-bugs-pendientes) es bienvenida.
+El proyecto está en desarrollo activo. Si encuentras bugs o tienes ideas, abre un issue.
 
 ---
 
 <div align="center">
 
-*Hecho con 🤖 + poca vergüenza · Úsala bien (o mal, tú decides)*
+*Hecho con poca vergüenza · Úsala bien (o mal, tú decides)*
 
 **⚠️ EN DESARROLLO — NO APTO PARA USO GENERAL AÚN ⚠️**
 
